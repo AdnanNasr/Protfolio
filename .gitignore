@@ -1,0 +1,7 @@
+node_modules/
+apps/web/node_modules/
+apps/pocketbase/node_modules/
+apps/pocketbase/pb_data/
+apps/pocketbase/pb_backups/
+dist/
+.env
