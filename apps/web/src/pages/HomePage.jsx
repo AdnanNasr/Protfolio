@@ -7,7 +7,6 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useLanguage } from '@/lib/LanguageContext';
-import pocketbaseClient from '@/lib/pocketbaseClient';
 
 const copy = {
   en: {
@@ -202,7 +201,17 @@ function ContactForm({ lang }) {
     if (!form.name.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email) || form.message.trim().length < 10) return setState('invalid');
     setState('sending');
     try {
-      await pocketbaseClient.collection('contact_messages').create({ name: form.name.trim(), email: form.email.trim(), message: form.message.trim() });
+      const response = await fetch('/api/contact.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+          website: form.website,
+        }),
+      });
+      if (!response.ok) throw new Error('Contact request failed');
       setState('sent');
     } catch { setState('error'); }
   };
