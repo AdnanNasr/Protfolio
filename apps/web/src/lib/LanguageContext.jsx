@@ -12,7 +12,9 @@ const LanguageContext = createContext(null);
 const getInitialLang = () => {
     if (typeof window === 'undefined') return 'en';
     const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === 'ar' || stored === 'en' ? stored : 'en';
+    if (['ar', 'en', 'de'].includes(stored)) return stored;
+    const browser = window.navigator.language?.slice(0, 2);
+    return ['ar', 'en', 'de'].includes(browser) ? browser : 'en';
 };
 
 export const LanguageProvider = ({ children }) => {
@@ -24,9 +26,9 @@ export const LanguageProvider = ({ children }) => {
         document.documentElement.setAttribute('lang', lang);
     }, [lang]);
 
-    const toggleLang = () => setLang((l) => (l === 'en' ? 'ar' : 'en'));
+    const toggleLang = () => setLang((l) => (l === 'en' ? 'ar' : l === 'ar' ? 'de' : 'en'));
 
-    const t = translations[lang];
+    const t = translations[lang] || translations.en;
 
     return (
         <LanguageContext.Provider value={{ lang, setLang, toggleLang, t }}>
