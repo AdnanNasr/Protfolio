@@ -8,9 +8,21 @@ onRecordAfterCreateSuccess((e) => {
     const email = record.get('email');
     const message = record.get('message');
 
-    const OWNER_EMAIL = 'adnzed00@gmail.com';
-    const RESEND_API_KEY = 're_dJaVTGLE_4BFq4bVm8CPagiGX4g3cQYfq';
-    const FROM_ADDRESS = 'Adnan Nasr Portfolio <onboarding@resend.dev>';
+    const OWNER_EMAIL = $os.getenv('PORTFOLIO_CONTACT_EMAIL');
+    const RESEND_API_KEY = $os.getenv('RESEND_API_KEY');
+    const FROM_ADDRESS = $os.getenv('RESEND_FROM_ADDRESS') || 'Adnan Nasr Portfolio <onboarding@resend.dev>';
+
+    if (!OWNER_EMAIL || !RESEND_API_KEY) {
+        e.app.logger().error(
+            'Contact email is not configured',
+            'missingOwnerEmail',
+            !OWNER_EMAIL,
+            'missingResendKey',
+            !RESEND_API_KEY,
+        );
+        e.next();
+        return;
+    }
 
     try {
         const html = `
