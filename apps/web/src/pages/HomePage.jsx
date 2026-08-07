@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   ArrowUpRight,
@@ -24,7 +24,7 @@ import {
   Sun,
   X,
 } from "lucide-react";
-import { useState } from "react";
+
 import { useLanguage } from "@/lib/LanguageContext";
 
 const copy = {
