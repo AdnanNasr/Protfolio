@@ -43,8 +43,8 @@ const copy = {
     since: "Building software since 2020",
     proof: [
       ["05", "product releases"],
-      ["1.57K", "Play Store impressions · 28 days"],
-      ["60", "user acquisitions"],
+      ["3.31k", "Play Store impressions · 28 days"],
+      ["+100", "user acquisitions"],
       ["2020", "started building"],
     ],
     workEyebrow: "Selected work",
